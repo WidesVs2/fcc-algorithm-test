@@ -1,19 +1,20 @@
-const express = require('express')
+const express = require("express");
 const mongoose = require('mongoose')
-const morgan = require('morgan')
 const path = require('path')
 const bodyParser = require('body-parser')
-const rfs = require('rotating-file-stream')
+const morgan = require('morgan')
+const winston = require('./config/winston')
 
-const app = express()
+const app = express();
 const router = express.Router()
 
+// graceful.gracefulify(fs)
+
+// Body Parser Middleware
 const jsonParser = bodyParser.json()
 
-const accessLogStream = rfs.createStream('access.log', {
-  interval: '1d', // rotate daily
-  path: path.join(__dirname, 'log')
-})
+// Logging Middleware
+app.use(morgan('combined', {stream: winston.stream}))
 
 // DB Config
 const db = require('./config/keys').mongoURI
@@ -27,20 +28,16 @@ mongoose
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log(err))
 
+
+
 // Set Static File
 app.use(express.static('client'))
-
-// Error Logging
-app.use(morgan('dev', {
-  skip: function (req, res) { return res.statusCode < 400 }
-}))
-
-// Log All Requests to Logs
-app.use(morgan('combined', { stream: accessLogStream }))
 
 //Index Route Function
 const indexRoutes = (router) => {
     router.get('/', (req, res) => res.sendFile(path.join(__dirname + '/client/index.html')))
+          .get('/about', (req, res) => res.sendFile(path.join(__dirname + '/client/about.html')))
+          .get('/contact', (req, res) => res.sendFile(path.join(__dirname + '/client/contact.html')))
     return router;
 }
 

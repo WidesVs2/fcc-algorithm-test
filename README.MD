@@ -20,9 +20,9 @@ Then install node modules with
     npm install
 ```
 
-You'll need to create a config/ directory to store your MongoURI in a keys.js file. 
+You'll need to create a keys.js file in the config/ directory to store your MongoURI. 
 ```    
-    mkdir config
+    cd config/ && touch keys.js
 ```
 
 File should look like this
@@ -34,7 +34,7 @@ File should look like this
     };
 ```
 
-Also create a log/ directory to store server logs.
+Also create a log/ directory in the root of your app to store server logs.
 ```
     mkdir log
 ```

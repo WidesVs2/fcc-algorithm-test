@@ -4,15 +4,19 @@
   "description": "Site showcasing algorithms built in javascript for completing FreeCodeCamp.org Algorithm courses",
   "main": "app.js",
   "scripts": {
+    "clean": "cd log/ && rm app.log error.log && cd ../",
     "start": "node app.js",
     "dev": "nodemon app.js"
   },
   "author": "Mike Ogden",
   "license": "MIT",
   "dependencies": {
+    "app-root-path": "^3.0.0",
     "express": "^4.17.1",
+    "graceful-fs": "^4.2.6",
     "mongoose": "^5.11.15",
     "morgan": "^1.10.0",
-    "rotating-file-stream": "^2.1.4"
+    "rotating-file-stream": "^2.1.4",
+    "winston": "^3.3.3"
   }
 }
