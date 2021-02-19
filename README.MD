@@ -11,26 +11,38 @@ This app is free to use, however please credit [WidesVs2](https://www.github.com
 ### Set up
 
 First, open a terminal in an empty directory then clone this repository
+```
     git clone https://www.github.com/WidesVs2/fcc-algorithm-test.git
+```
 
 Then install node modules with
+```
     npm install
+```
 
 You'll need to create a config/ directory to store your MongoURI in a keys.js file. 
+```    
     mkdir config
+```
 
 File should look like this
+```
     dbPassword = 'mongodb+srv://<'Your User Name'>:<'Your Password'>@dev-test.pazwr.mongodb.net/<'DB Name'>?retryWrites=true&w=majority';
 
     module.exports = {
         mongoURI: dbPassword
     };
+```
 
 Also create a log/ directory to store server logs.
+```
     mkdir log
+```
 
 After setup is complete, run the server in development mode
+```
     npm run dev
+```
 
 Current project NOT setup for production, WIP
 
