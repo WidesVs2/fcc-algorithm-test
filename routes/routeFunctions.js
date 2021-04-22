@@ -1,67 +1,60 @@
-class Functions {
+class Func {
     constructor(counter) {
-        this._counter = Math.floor(Math.random() * counter) 
+        this._counter = counter
     }
 
-    log(x) {
-        console.log(x)
+    getDate() {
+        let date = new Date()
+        return date
     }
 
-    increment() {
-        this._counter++
-        this.log(this._counter)
-        return this._counter
+    getLocalDateString() {
+        let date = this.getDate()
+        let str = date.toLocaleString()
+        return str
     }
 
-    decrement() {
-        this._counter--
-        this.log(this._counter)
-        return this._counter
+    getUtcDateString() {
+        let date = this.getDate()
+        let str = date.toUTCString()
+        return str
     }
 
-    formatData(data, route, msg) {
-        this.log('Formatting...')
-        let arr = []
-        for (let i = 0; i < data.length; i++) {
-            arr.push({
-                msg: `Success: ${msg}`,
-                count: data.length, 
-                data: data[i],
-                meta: {
-                    request_id: this._counter, 
-                    request_at: {
-                        GMT: new Date(Date.now()).toUTCString(),
-                        Local: `${new Date(Date.now()).toLocaleDateString()} ${new Date(Date.now()).toLocaleTimeString()}`
-                    },
-                    route: route
-                }
-                     
-            })
+    formatData(data, req, msg) {
+        this.incrementCount()
+        let date = this.getDate()
+        let obj = {
+            data,
+            msg,
+            count: data.length,
+            _meta: {
+                request_id: this._counter,
+                request_method: req.method,
+                request_url: req.originalUrl,
+                request_date_local: this.getLocalDateString(), 
+                request_date_UTC: this.getUtcDateString() 
+            }
         }
-        this.log('Formatted')
-        return arr
+        return obj
     }
 
-    formatSingleData(data, route, msg) {
-        this.log('Formatting...')
-        let arr = []
-        arr.push({
-            msg: `Success: ${msg}`,
-                count: data.length, 
-                data: data,
-                meta: {
-                    request_id: this._counter, 
-                    request_at: {
-                        GMT: new Date(Date.now()).toUTCString(),
-                        Local: `${new Date(Date.now()).toLocaleDateString()} ${new Date(Date.now()).toLocaleTimeString()}`
-                    },
-                    route: route
-                }
+    serveErr(err) {
+        console.log(err)
+        res.status(500).json({
+            msg: 'Server Error',
+            err
         })
-        this.log('Formatted')
-        return arr
     }
-    
+
+    incrementCount() {
+        this._counter++
+        return this._counter
+    }
+
+    decrementCount() {
+        this._counter--
+        return this._counter
+    }
 }
 
-module.exports = Functions
+module.exports = Func = new Func(Math.floor(Math.random() * 10000))

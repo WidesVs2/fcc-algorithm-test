@@ -1,5 +1,10 @@
-/config/keys.js 
+# Logs
+logs
+
+# Client
+/client
+
+# Config Files
+/configs/keys.js
+
 /node_modules
-/log
-*.log
-*.env
